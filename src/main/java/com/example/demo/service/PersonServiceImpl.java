@@ -1,46 +1,42 @@
 package com.example.demo.service;
 
-import com.example.demo.dao.PersonDao;
+import com.example.demo.repository.PersonRepository;
 import com.example.demo.model.Person;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
-@Service("second")
+@Service("personService")
 public class PersonServiceImpl implements PersonService{
 
-    private final PersonDao personDao;
+    private final PersonRepository personDao;
 
-    @Autowired
-    public PersonServiceImpl(@Qualifier("first") PersonDao personDao) {
+    public PersonServiceImpl(PersonRepository personDao) {
         this.personDao = personDao;
     }
 
     @Override
-    public int addPerson(Person person){
-        return personDao.insertPerson(person);
+    public Person addPerson(Person person){
+        return personDao.save(person);
     }
 
     @Override
     public List<Person> getAllPersons(){
-        return personDao.getAllPersons();
+        return personDao.findAll();
     }
 
     @Override
-    public Person getPersonById(UUID id) {
-        return personDao.getPersonById(id).orElse(null);
+    public Person getPersonById(Long id) {
+        return personDao.findById(id).orElse(null);
     }
 
     @Override
-    public int deletePersonById(UUID id) {
-        return personDao.deletePerson(id);
+    public void deletePersonById(Long id) {
+        personDao.deleteById(id);
     }
 
     @Override
-    public int updatePersonById(UUID id, Person person) {
-        return personDao.updatePerson(id,person);
+    public Person updatePersonById(Long id, Person person) {
+        return personDao.save(person);
     }
 }

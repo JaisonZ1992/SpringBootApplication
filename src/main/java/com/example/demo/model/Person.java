@@ -1,20 +1,36 @@
 package com.example.demo.model;
 
-import com.fasterxml.jackson.annotation.JacksonAnnotation;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.UUID;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
-public class Person {
-    private final UUID id;
-    private final String name;
+@Entity
+@Table(name = "person")
+public class Person extends BaseEntity{
+    @Id
+    @GeneratedValue(generator = "person_generator")
+    @SequenceGenerator(
+            name = "person_generator",
+            sequenceName = "person_sequence",
+            initialValue = 1000
+    )
+    private Long id;
 
-    public Person(@JsonProperty("id") UUID id, @JsonProperty("name") String name) {
-        this.id = id;
+    @NotBlank
+    @Size(min = 3, max = 100)
+    private String name;
+
+    public Person(){
+
+    }
+
+    public Person(String name) {
         this.name = name;
     }
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 

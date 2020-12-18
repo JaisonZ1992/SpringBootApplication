@@ -3,16 +3,15 @@ package com.example.demo.service;
 import com.example.demo.model.Person;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface PersonService {
-    int addPerson(Person person);
+    Person addPerson(Person person);
 
     List<Person> getAllPersons();
 
-    Person getPersonById(UUID id);
+    Person getPersonById(Long id);
 
-    int deletePersonById(UUID id);
+    void deletePersonById(Long id);
 
-    int updatePersonById(UUID id, Person person);
+    Person updatePersonById(Long id, Person person);
 }
