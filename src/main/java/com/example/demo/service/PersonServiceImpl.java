@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service("second")
 public class PersonServiceImpl implements PersonService{
@@ -26,5 +27,20 @@ public class PersonServiceImpl implements PersonService{
     @Override
     public List<Person> getAllPersons(){
         return personDao.getAllPersons();
+    }
+
+    @Override
+    public Person getPersonById(UUID id) {
+        return personDao.getPersonById(id).orElse(null);
+    }
+
+    @Override
+    public int deletePersonById(UUID id) {
+        return personDao.deletePerson(id);
+    }
+
+    @Override
+    public int updatePersonById(UUID id, Person person) {
+        return personDao.updatePerson(id,person);
     }
 }
