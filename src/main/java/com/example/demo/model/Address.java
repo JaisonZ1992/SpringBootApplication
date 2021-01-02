@@ -1,20 +1,10 @@
 package com.example.demo.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import javax.persistence.*;
 
 @Entity
 @Table(name = "address")
 public class Address extends BaseEntity {
-    public Address(){
-    }
-
-    public Address(String street, String district) {
-        this.street = street;
-        this.district = district;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +18,14 @@ public class Address extends BaseEntity {
 
     @OneToOne(mappedBy = "address")
     private Person person;
+
+    public Address(){
+    }
+
+    public Address(String street, String district) {
+        this.street = street;
+        this.district = district;
+    }
 
     public String getStreet() {
         return street;
@@ -43,5 +41,9 @@ public class Address extends BaseEntity {
 
     public void setDistrict(String district) {
         this.district = district;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

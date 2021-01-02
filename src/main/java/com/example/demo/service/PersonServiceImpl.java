@@ -19,6 +19,7 @@ public class PersonServiceImpl implements PersonService{
 
     @Override
     public Person addPerson(Person person){
+        person.getOrders().forEach(d -> d.setPerson(person));
         return personRepository.save(person);
     }
 
