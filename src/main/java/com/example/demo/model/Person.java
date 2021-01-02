@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
@@ -10,17 +11,18 @@ import javax.validation.constraints.Size;
 @Table(name = "person")
 public class Person extends BaseEntity{
     @Id
-    @GeneratedValue(generator = "person_generator")
-    @SequenceGenerator(
-            name = "person_generator",
-            sequenceName = "person_sequence",
-            initialValue = 1000
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     @NotBlank
     @Size(min = 3, max = 100)
     private String name;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id",nullable = false)
+    @JsonProperty("address")
+    private Address address;
 
     public Person(){
 
@@ -36,5 +38,13 @@ public class Person extends BaseEntity{
 
     public String getName() {
         return name;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }
