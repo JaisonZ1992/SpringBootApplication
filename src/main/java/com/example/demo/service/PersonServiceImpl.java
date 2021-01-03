@@ -20,6 +20,7 @@ public class PersonServiceImpl implements PersonService{
     @Override
     public Person addPerson(Person person){
         person.getOrders().forEach(d -> d.setPerson(person));
+        person.getAssociatedGroups().forEach(d -> d.getMembers().add(person));
         return personRepository.save(person);
     }
 
