@@ -20,7 +20,7 @@ public class Person extends BaseEntity {
     @Size(min = 3, max = 100)
     private String name;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
     @JoinColumn(name = "address_id", nullable = false)
     @JsonProperty("address")
     private Address address;
@@ -64,6 +64,10 @@ public class Person extends BaseEntity {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setName(String name) {

@@ -16,7 +16,7 @@ public class Address extends BaseEntity {
     @Column(name = "district")
     private String district;
 
-    @OneToOne(mappedBy = "address")
+    @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true,mappedBy = "address")
     private Person person;
 
     public Address(){

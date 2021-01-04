@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service("personService")
 public class PersonServiceImpl implements PersonService{
@@ -40,7 +41,16 @@ public class PersonServiceImpl implements PersonService{
     }
 
     @Override
-    public Person updatePersonById(Long id, Person person) {
-        return personRepository.save(person);
+    public Person updatePersonById(Long id, Person newPerson) {
+        Optional<Person> person = personRepository.findById(id);
+        //TODO Many to Many tables getting deleted on Delete by Id and merge exisitng items with new items
+        if(person.isPresent()){
+            newPerson.setId(id);
+            newPerson.getOrders().forEach(d -> d.setPerson(newPerson));
+            newPerson.getAssociatedGroups().forEach(d -> d.getMembers().add(newPerson));
+            return personRepository.save(newPerson);
+        }else {
+            return null;
+        }
     }
 }
