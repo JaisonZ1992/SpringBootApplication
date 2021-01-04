@@ -1,6 +1,5 @@
-package com.example.demo.model;
+package com.example.demo.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
@@ -26,7 +25,7 @@ public class Person extends BaseEntity {
     @JsonProperty("address")
     private Address address;
 
-    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.LAZY)
     private Set<Order> orders;
 
     @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
@@ -47,18 +46,35 @@ public class Person extends BaseEntity {
         return name;
     }
 
-    @JsonIgnore
     public Set<Order> getOrders() {
         return orders;
     }
 
-    @JsonIgnore
     public Set<Group> getAssociatedGroups() {
         return associatedGroups;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public Long getId() {
         return id;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setOrders(Set<Order> orders) {
+        this.orders = orders;
+    }
+
+    public void setAssociatedGroups(Set<Group> associatedGroups) {
+        this.associatedGroups = associatedGroups;
+    }
 }
