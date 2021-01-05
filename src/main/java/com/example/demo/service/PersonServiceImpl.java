@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.exception.EntityNotFoundException;
 import com.example.demo.repository.PersonRepository;
 import com.example.demo.entity.Person;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,26 +32,33 @@ public class PersonServiceImpl implements PersonService{
     }
 
     @Override
-    public Person getPersonById(Long id) {
-        return personRepository.findById(id).orElse(null);
+    public Person getPersonById(Long id) throws EntityNotFoundException{
+        return personRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(Person.class, "id", id.toString()));
     }
 
     @Override
     public void deletePersonById(Long id) {
-        personRepository.deleteById(id);
+        Optional<Person> person = personRepository.findById(id);
+        if(person.isPresent()) {
+            personRepository.deleteById(id);
+        }else {
+            throw new EntityNotFoundException(Person.class, "id", id.toString());
+        }
     }
 
     @Override
-    public Person updatePersonById(Long id, Person newPerson) {
+    public Person updatePersonById(Long id, Person newPerson) throws EntityNotFoundException{
         Optional<Person> person = personRepository.findById(id);
-        //TODO Many to Many tables getting deleted on Delete by Id and merge exisitng items with new items
+        //TODO Many to Many tables getting deleted on Delete by Id,
+        // merge existing items with new items,
+        // new Ids generated instead of updating existing ones for mapped tables
         if(person.isPresent()){
             newPerson.setId(id);
             newPerson.getOrders().forEach(d -> d.setPerson(newPerson));
             newPerson.getAssociatedGroups().forEach(d -> d.getMembers().add(newPerson));
             return personRepository.save(newPerson);
         }else {
-            return null;
+            throw new EntityNotFoundException(Person.class, "id", id.toString());
         }
     }
 }

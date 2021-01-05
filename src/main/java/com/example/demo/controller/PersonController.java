@@ -2,15 +2,17 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.PersonDetailDto;
 import com.example.demo.dto.PersonDto;
+import com.example.demo.dto.Response;
 import com.example.demo.entity.Person;
 import com.example.demo.service.PersonService;
 import com.example.demo.utils.DtoConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.ParseException;
 import java.util.List;
 
 @RequestMapping("/api/v1/person")
@@ -25,28 +27,32 @@ public class PersonController {
     }
 
     @PostMapping
-    public PersonDetailDto addPerson(@NonNull @RequestBody PersonDetailDto person) throws ParseException {
-        Person person1 = DtoConverter.convertToEntity(person);
-        return DtoConverter.convertToDto(personService.addPerson(person1));
+    public ResponseEntity<Response<PersonDetailDto>> addPerson(@NonNull @RequestBody PersonDetailDto person){
+        PersonDetailDto newPerson = DtoConverter.convertToDto(personService.addPerson(DtoConverter.convertToEntity(person)));
+        return new ResponseEntity<>(new Response<>("success", "Person Added", newPerson),HttpStatus.CREATED);
     }
 
     @GetMapping
-    public List<PersonDto> getAllPersons(){
-        return DtoConverter.convertToDto(personService.getAllPersons());
+    public ResponseEntity<Response<List<PersonDto>>> getAllPersons(){
+        List<PersonDto> personList = DtoConverter.convertToDto(personService.getAllPersons());
+        return new ResponseEntity<>(new Response<>("success", "List of persons", personList),HttpStatus.OK);
     }
 
     @GetMapping(path = {"{id}"})
-    public PersonDetailDto getPersonById(@PathVariable("id") Long id){
-        return DtoConverter.convertToDto(personService.getPersonById(id));
+    public ResponseEntity<Response<PersonDetailDto>> getPersonById(@PathVariable("id") Long id){
+        PersonDetailDto person = DtoConverter.convertToDto(personService.getPersonById(id));
+        return new ResponseEntity<>(new Response<>("success", "Person Found", person),HttpStatus.OK);
     }
 
     @PutMapping(path = {"{id}"})
-    public PersonDetailDto updatePerson(@PathVariable("id") Long id, @NonNull @RequestBody PersonDetailDto person) throws ParseException {
-        return DtoConverter.convertToDto(personService.updatePersonById(id,DtoConverter.convertToEntity(person)));
+    public ResponseEntity<Response<PersonDetailDto>> updatePerson(@PathVariable("id") Long id, @NonNull @RequestBody PersonDetailDto person){
+        PersonDetailDto updatedPerson = DtoConverter.convertToDto(personService.updatePersonById(id,DtoConverter.convertToEntity(person)));
+        return new ResponseEntity<>(new Response<>("success", "Person Updated", updatedPerson),HttpStatus.OK);
     }
 
     @DeleteMapping(path = {"{id}"})
-    public void deletePerson(@PathVariable("id") Long id){
+    public ResponseEntity<Response<PersonDetailDto>> deletePerson(@PathVariable("id") Long id){
         personService.deletePersonById(id);
+        return new ResponseEntity<>(new Response<>("success", "Person deleted"),HttpStatus.OK);
     }
 }

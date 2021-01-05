@@ -16,7 +16,7 @@ public class DtoConverter {
         return modelMapper.map(person, PersonDetailDto.class);
     }
 
-    public static Person convertToEntity(PersonDetailDto personDto) throws ParseException {
+    public static Person convertToEntity(PersonDetailDto personDto){
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(personDto, Person.class);
     }
