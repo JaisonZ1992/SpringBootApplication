@@ -1,9 +1,13 @@
 package com.example.demo.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 public class OrderDto implements Serializable {
     private Long id;
+    @NotBlank(message = "Item name is mandatory")
     private String itemName;
 
     public Long getId() {

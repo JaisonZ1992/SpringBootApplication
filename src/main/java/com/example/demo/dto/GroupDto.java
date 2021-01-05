@@ -1,10 +1,14 @@
 package com.example.demo.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 public class GroupDto implements Serializable {
 
     private Long id;
+    @NotBlank(message = "Group name is mandatory")
     private String name;
 
     public Long getId() {

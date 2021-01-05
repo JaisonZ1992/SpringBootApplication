@@ -1,11 +1,14 @@
 package com.example.demo.dto;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 public class AddressDto implements Serializable {
 
     private Long id;
+    @NotBlank(message = "Street is mandatory")
     private String street;
+    @NotBlank(message = "District is mandatory")
     private String district;
 
     public Long getId() {

@@ -12,7 +12,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"name\":\"Jaison2\"\n}",
+					"raw": "{\n    \"name\":\"Test James 92\",\n    \"address\":{\n        \"street\":\"Jksfsd 10\",\n        \"district\":\"ktm asdasd 10\"\n    },\n    \"orders\":[\n        {\"itemName\":\"Jitem5\"},\n        {\"itemName\":\"item6\"}\n    ],\n    \"associatedGroups\":[\n        { \"name\":\"Jgroup1\"},\n        {\"name\":\"Jgroup2\"},\n        {\"name\":\"Jgroup3\"}\n    ]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -42,7 +42,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"id\":1000,\n    \"name\":\"Jaison Zachariah updated\"\n}",
+					"raw": "{\n    \"name\":\"James 921\",\n    \"address\":{\n        \"street\":\"J0ksfsd 10\",\n        \"district\":\"J0ktm asdasd 10\"\n    },\n    \"orders\":[\n        {\"itemName\":\"J0item5\"},\n        {\"itemName\":\"J0item6\"}\n    ],\n    \"associatedGroups\":[\n        { \"name\":\"J0group1\"},\n        {\"name\":\"J0group2\"},\n        {\"name\":\"J0group3\"}\n    ]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -50,7 +50,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/v1/person/1000",
+					"raw": "http://localhost:8080/api/v1/person/25",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -60,7 +60,7 @@
 						"api",
 						"v1",
 						"person",
-						"1000"
+						"25"
 					]
 				}
 			},
@@ -93,7 +93,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/v1/person/1051",
+					"raw": "http://localhost:8080/api/v1/person/27",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -103,7 +103,7 @@
 						"api",
 						"v1",
 						"person",
-						"1051"
+						"27"
 					]
 				}
 			},
@@ -115,7 +115,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/v1/person/1000",
+					"raw": "http://localhost:8080/api/v1/person/28",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -125,12 +125,11 @@
 						"api",
 						"v1",
 						"person",
-						"1000"
+						"28"
 					]
 				}
 			},
 			"response": []
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }

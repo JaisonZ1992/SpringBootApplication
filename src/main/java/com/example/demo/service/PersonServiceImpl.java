@@ -21,8 +21,8 @@ public class PersonServiceImpl implements PersonService{
 
     @Override
     public Person addPerson(Person person){
-        person.getOrders().forEach(d -> d.setPerson(person));
-        person.getAssociatedGroups().forEach(d -> d.getMembers().add(person));
+        Optional.ofNullable(person.getOrders()).ifPresent(list->list.forEach(d -> d.setPerson(person)));
+        Optional.ofNullable(person.getAssociatedGroups()).ifPresent(list->list.forEach(d -> d.getMembers().add(person)));
         return personRepository.save(person);
     }
 
@@ -54,8 +54,8 @@ public class PersonServiceImpl implements PersonService{
         // new Ids generated instead of updating existing ones for mapped tables
         if(person.isPresent()){
             newPerson.setId(id);
-            newPerson.getOrders().forEach(d -> d.setPerson(newPerson));
-            newPerson.getAssociatedGroups().forEach(d -> d.getMembers().add(newPerson));
+            Optional.ofNullable(newPerson.getOrders()).ifPresent(list->list.forEach(d -> d.setPerson(newPerson)));
+            Optional.ofNullable(newPerson.getAssociatedGroups()).ifPresent(list->list.forEach(d -> d.getMembers().add(newPerson)));
             return personRepository.save(newPerson);
         }else {
             throw new EntityNotFoundException(Person.class, "id", id.toString());

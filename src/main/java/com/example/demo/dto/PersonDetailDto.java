@@ -1,15 +1,24 @@
 package com.example.demo.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Set;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class PersonDetailDto implements Serializable {
 
     private int id;
+    @NotBlank(message = "Person name is mandatory")
     private String name;
+    @Valid
+    @NotNull
     private AddressDto address;
-    private Set<OrderDto> orders;
-    private Set<GroupDto> associatedGroups;
+    private Set<@Valid OrderDto> orders;
+    private Set<@Valid GroupDto> associatedGroups;
 
     public AddressDto getAddress() {
         return address;

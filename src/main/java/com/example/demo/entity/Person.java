@@ -16,8 +16,7 @@ public class Person extends BaseEntity {
     @Column(name = "id")
     private Long id;
 
-    @NotBlank
-    @Size(min = 3, max = 100)
+    @Column(name = "name")
     private String name;
 
     @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
